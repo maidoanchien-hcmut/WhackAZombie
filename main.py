@@ -54,7 +54,7 @@ class Game:
         self.game_over_font = pygame.font.Font(
             join('font', 'Minecrafter.Reg.ttf'), 75)
         self.score_font = pygame.font.Font(
-            join('font', 'MinecraftReg.otf'), 20)
+            join('font', 'MinecraftReg.otf'), 40)
         self.game_over_score_font = pygame.font.Font(
             join('font', 'MinecraftReg.otf'), 36)
         # sound
@@ -65,7 +65,7 @@ class Game:
             join('sound', 'zombie_hit.ogg'))
         self.zombie_spawn_sound = pygame.mixer.Sound(
             join('sound', 'zombie_spawn.ogg'))
-        self.zombie_spawn_sound.set_volume(0.1)
+        self.zombie_spawn_sound.set_volume(0.5)
 
     def load_images(self):
         self.zombie_frames = []
@@ -152,7 +152,7 @@ class Game:
                     pygame.mixer.music.unload()
                     pygame.mixer.music.load(join('sound', 'pigstep.mp3'))
                     pygame.mixer.music.play(-1)
-                    pygame.mixer.music.set_volume(0.03)
+                    pygame.mixer.music.set_volume(0.2)
 
             if self.in_game:
                 pygame.mouse.set_visible(False)
@@ -200,7 +200,7 @@ class Game:
                     pygame.mixer.music.unload()
                     pygame.mixer.music.load(join('sound', 'pigstep.mp3'))
                     pygame.mixer.music.play(-1)
-                    pygame.mixer.music.set_volume(0.03)
+                    pygame.mixer.music.set_volume(0.2)
 
             pygame.display.update()
         pygame.quit()
