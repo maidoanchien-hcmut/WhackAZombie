@@ -24,8 +24,6 @@ class Zombie(pygame.sprite.Sprite):
         self.spawn_time = pygame.time.get_ticks()
         self.life_time = 1000
 
-        print('Zombie spawned')
-
     def destroy(self):
         self.hit_time = pygame.time.get_ticks()
         self.is_hit = True
@@ -71,7 +69,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = pygame.mouse.get_pos()
 
 
-class PlayButton:
+class Button:
     def __init__(self, text, width, height, pos):
         # rect
         self.top_rect = pygame.Rect(pos, (width, height))

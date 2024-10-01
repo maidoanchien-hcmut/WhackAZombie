@@ -17,11 +17,11 @@ class Game:
 
         # sprites
         self.player = Player(self.player_sprite)
-        self.button = PlayButton(
+        self.button = Button(
             'Start Game', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT / 2 + 25))
-        self.play_again = PlayButton(
+        self.play_again = Button(
             'Play Again', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT - 200))
-        self.menu = PlayButton(
+        self.menu = Button(
             'Menu', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT - 100))
         # zombie timer
         self.zombie_spawn = pygame.event.custom_type()
@@ -39,7 +39,7 @@ class Game:
         self.time_color = (255, 255, 255)
         self.time_x = (WINDOW_WIDTH - self.time_length) / 2
         self.time_y = 10
-        self.time_rate = 30
+        self.time_rate = 5
 
         # score
         self.hit = 0
