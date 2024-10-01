@@ -20,7 +20,9 @@ class Game:
         self.button = PlayButton(
             'Start Game', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT / 2 + 25))
         self.play_again = PlayButton(
-            'Play Again', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT - 100))
+            'Play Again', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT - 200))
+        self.menu = PlayButton(
+            'Menu', 400, 50, (WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT - 100))
         # zombie timer
         self.zombie_spawn = pygame.event.custom_type()
         pygame.time.set_timer(self.zombie_spawn, 2000)
@@ -33,7 +35,7 @@ class Game:
 
         # game time
         self.time_length = 300
-        self.time_width = 20
+        self.time_width = 30
         self.time_color = (255, 255, 255)
         self.time_x = (WINDOW_WIDTH - self.time_length) / 2
         self.time_y = 10
@@ -63,6 +65,8 @@ class Game:
         self.start_bg_sound = pygame.mixer.music.play(-1)
         self.zombie_hit_sound = pygame.mixer.Sound(
             join('sound', 'zombie_hit.ogg'))
+        self.zombie_death_sound = pygame.mixer.Sound(
+            join('sound', 'zombie_death.ogg'))
         self.zombie_spawn_sound = pygame.mixer.Sound(
             join('sound', 'zombie_spawn.ogg'))
         self.zombie_spawn_sound.set_volume(0.5)
@@ -94,7 +98,8 @@ class Game:
             collision_sprite = pygame.sprite.spritecollide(
                 self.player, self.zombie_sprite, False, pygame.sprite.collide_mask)
             if collision_sprite and not collision_sprite[0].is_hit:
-                self.zombie_hit_sound.play()
+                random.choice((self.zombie_death_sound,
+                              self.zombie_hit_sound)).play()
                 self.hit += 1
                 collision_sprite[0].destroy()
             else:
@@ -109,6 +114,9 @@ class Game:
         self.display_surface.blit(score_surface, score_rect)
 
     def display_time(self):
+        time_surface = self.score_font.render('Time:', True, (255, 255, 255))
+        time_rect = time_surface.get_frect(right=self.time_x - 10, top=5)
+        self.display_surface.blit(time_surface, time_rect)
         delta_time = self.clock.get_time() / 1000
         self.time_length -= self.time_rate * delta_time
         if self.time_length < 0:
@@ -201,6 +209,17 @@ class Game:
                     pygame.mixer.music.load(join('sound', 'pigstep.mp3'))
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(0.2)
+
+                if self.menu.draw(self.display_surface):
+                    self.hit = 0
+                    self.miss = -1
+                    self.time_length = 300
+                    self.start_game = True
+                    self.game_over = False
+                    self.zombie_sprite.empty()
+                    pygame.mixer.music.unload()
+                    pygame.mixer.music.load(join('sound', 'minecraft.mp3'))
+                    pygame.mixer.music.play(-1)
 
             pygame.display.update()
         pygame.quit()
